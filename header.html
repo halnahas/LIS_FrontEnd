@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+
+    <title>Library Information System</title>    
+
+    <!-- Bootstrap core CSS -->
+    <link href="./dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="./style.css">
+    <style>body {background-color:#343a40;}</style>
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header" id="navLinks">
+          <a class="navbar-brand" style="color:white" href="./libraryIS.html">Uni-Library</a>        
+          <ul class="nav navbar-nav list" >
+            <li class="active list"><a style="color:white" href="./libraryIS.html">Home</a></li>
+            <li class="list"><a style="color:white" href="./add_book.html">Add book</a></li>
+            <li class="list"><a class="external" style="color:white" href="./search.html">Search</a></li>
+            <li class="list"><a style="color:white" href="./loan.html">Book Loan</a></li>            
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <script src="./jquery.slim.min.js"></script>    
+    <script src="./dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#navLinks").find("a:not(.dropdown-toggle)").on("click", function (e) {
+             e.preventDefault();
+             console.log($(this).attr("href"))
+             window.parent.location.href = $(this).attr("href");
+        });
+    });
+    </script>
+  </body>
+</html>

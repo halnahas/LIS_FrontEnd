@@ -1,0 +1,25 @@
+.fixed-bar {
+	position: fixed !important;
+	width: 100%;	
+	background-color: #343A40;	
+	height: 60px;
+}
+
+.list {
+    display:inline-block; !important;
+    margin-left: 10px;
+}
+
+.firstDiv {
+  margin-top: 10px;
+}
+
+.firstAddDiv {
+	margin-top: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .firstDiv {
+    margin-top: 40px;
+  }
+}
