@@ -9,6 +9,13 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="./dist/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="./style.css">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+    <style>
+      body {
+        font-size: 16px;
+      }
+    </style>
 	  <meta name="page" content="">	
 
   </head>
@@ -16,48 +23,80 @@
   <body class="bg-light" >
     <iframe src="./header.html" scrolling="no" class="fixed-bar" style="z-index: 1000; border:none;">
     </iframe>
+
+    <div class="modal" id="resultsModal" tabindex="-1" role="dialog" aria-labelledby="resultsModalTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="resultsModalTitle"></h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"><h3>&times;</h3></span>
+            </button>
+          </div>
+          <div class="modal-body" id="resultsModalBody">            
+          </div>
+          <div class="modal-footer">            
+            <button type="button" class="btn btn-primary" data-dismiss="modal"><h3>Ok</h3></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <div class="py-5 text-center">
-        <div class="firstAddDiv">
-          <h2>Enable a student to borrow a book -- Under construction</h2>
-          <p class="lead">Enter book and studnet data to allow a studnet to borrow a book.</p>
+        <div class="firstAddDiv" style="margin-top: 45px;">
+          <h1>Enable a student to borrow a book</h1>
+          <h2 >Enter book and studnet data to allow a studnet to borrow a book.</h2>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-muted">Note</span>
             
-          </h4>
+          </h2>
           <ul class="list-group mb-3">
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 class="my-0">Both student ID and book ISBN are requried. This feature is under construction.</h6>                
+                <h4 class="my-0">All fields are required.</h4>                
               </div>              
             </li>            
           </ul>          
         </div>
         <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Book and Studnet Details</h4>
-          <form class="needs-validation" novalidate="">                         
-            <div class="mb-3">
-              <label for="isbn">ISBN*</label>
-              <input type="text" class="form-control" id="isbn" placeholder="1234" required="" value="">              
-              <div class="invalid-feedback">
-                Please enter the book ISBN.
+          <h1 class="mb-3">Book and Studnet Details</h1>          
+          <div class="mb-3">
+            <label for="isbn">ISBN*</label>
+            <input type="text" class="form-control" id="isbn" placeholder="1234" required="" value="">                            
+          </div>
+          <div class="mb-3">
+            <label for="studentID">Studnet ID*</label>
+            <input type="text" class="form-control" id="studentID" placeholder="4321" required="" value="">                            
+          </div>
+          <div class="mb-3">
+            <label for="loanDuration">Loan Duration (days)*</label>
+            <input type="text" class="form-control" id="loanDuration" placeholder="3" required="" value="">                            
+          </div>
+          <div class="mb-3">
+            <label for="startDate">Start Date*</label>            
+            <div class="container">
+             <div class="row">
+               <div class='mb-3'>
+                   <div class="form-group">
+                      <div class='input-group date' id='datetimepicker1'>
+                         <input type='text' class="form-control" />
+                         <span class="input-group-addon">
+                         <span style="margin-left: 8px; margin-top: 1px" class="glyphicon glyphicon-calendar"></span>
+                         </span>
+                      </div>
+                   </div>
+               </div>                
               </div>
-            </div>
-            <div class="mb-3">
-              <label for="studentID">Studnet ID*</label>
-              <input type="text" class="form-control" id="studentID" placeholder="4321" required="" value="">              
-              <div class="invalid-feedback">
-                Please enter the ID of the student.
-              </div>
-            </div>
-            <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Book Loan</button>
-          </form>
+             </div>
+          </div>
+          <hr class="mb-4">
+          <button class="btn btn-primary btn-lg btn-block" onclick="showModal()"><h2>Book Loan</h2></button>          
         </div>        
       </div>
 
@@ -70,10 +109,46 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script data-savepage-type="" type="text/plain" data-savepage-src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script data-savepage-type="" type="text/plain"></script>
-    <script data-savepage-type="" type="text/plain" data-savepage-src="../../assets/js/vendor/popper.min.js"></script>
-    <script data-savepage-type="" type="text/plain" data-savepage-src="../../dist/js/bootstrap.min.js"></script>
-    <script data-savepage-type="" type="text/plain" data-savepage-src="../../assets/js/vendor/holder.min.js"></script>
-    <script data-savepage-type="" type="text/plain"></script>  	
-</body></html>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>    
+    <script type="text/javascript" src="./dist/js/bootstrap.min.js"></script>            
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $(function () {
+          $('#datetimepicker1').datetimepicker({format: 'YYYY-MM-DD'});
+        });
+      });
+
+
+      function showModal() {        
+        let isbn = $('#isbn').val();
+        let studentID = $('#studentID').val();
+        let loanDuration = $('#loanDuration').val();
+        let startDate = $('#startDate').val();
+        if (studentID === "" || isbn === "" || loanDuration === "" || startDate === "") {
+          $('#resultsModalTitle').html("Error");
+          $('#resultsModalBody').html("All fields are required!");
+          $('#resultsModal').modal('show');        
+        } 
+        else {          
+          let query = {};
+          query["studentID"]=studentID;
+          query["isbn"] = isbn;
+          query["loanDuration"]=loanDuration;
+          query["startDate"]=startDate;
+
+          $.post( "http://localhost:3000/books/newLoan", query, function( data ) {                          
+              $('#resultsModalTitle').html("Success");
+              $('#resultsModalBody').html("Book has been borrowd by the studnet");
+              $('#resultsModal').modal('show');        
+            }).fail(function(response) {
+              $('#resultsModalTitle').html("Error");
+              $('#resultsModalBody').html("Error enabling studnet to borrow the book!");
+              $('#resultsModal').modal('show');        
+            })          
+        }
+      }
+    </script>
+  </body>
+</html>

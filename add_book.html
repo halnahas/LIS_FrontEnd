@@ -14,6 +14,25 @@
   </head>
 
   <body class="bg-light" >
+    <!-- Modal -->
+    <div class="modal" id="resultsModal" tabindex="-1" role="dialog" aria-labelledby="resultsModalTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="resultsModalTitle"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="resultsModalBody">            
+          </div>
+          <div class="modal-footer">            
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <iframe src="./header.html" scrolling="no" class="fixed-bar" style="z-index: 1000; border:none;">
     </iframe>
     <div class="container">
@@ -39,22 +58,14 @@
           </ul>          
         </div>
         <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Book Details</h4>
-          <form class="needs-validation" novalidate="">                         
+          <h4 class="mb-3">Book Details</h4>          
             <div class="mb-3">
               <label for="title">Title*</label>
-              <input type="text" class="form-control" id="title" placeholder="Macbeth" required="" value="">
-              <div class="invalid-feedback">
-                Please enter the book title.
-              </div>
+              <input type="text" class="form-control" id="title" placeholder="Macbeth" required="" value="">              
             </div>
-
             <div class="mb-3">
               <label for="isbn">ISBN*</label>
-              <input type="text" class="form-control" id="isbn" placeholder="1234" value="">
-              <div class="invalid-feedback">
-                Please enter the book ISBN.
-              </div>
+              <input type="text" class="form-control" id="isbn" placeholder="1234" value="">              
             </div>
 
             <div class="mb-3">
@@ -80,10 +91,7 @@
                 <select class="custom-select d-block w-100" id="country" required="">
                   <option value="">Choose...</option>
                   <option>United States</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please select a valid country.
-                </div>
+                </select>                
               </div>
               <div class="col-md-4 mb-3">
                 <label for="state">State</label>
@@ -91,26 +99,15 @@
                   <option value="">Choose...</option>
                   <option>California</option>
                   <option>New York</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please provide a valid state.
-                </div>
+                </select>                
               </div>
               <div class="col-md-3 mb-3">
                 <label for="zip">Zip</label>
-                <input type="text" class="form-control" id="zip" placeholder="" required="" value="">
-                <div class="invalid-feedback">
-                  Zip code required.
-                </div>
+                <input type="text" class="form-control" id="zip" placeholder="" required="" value="">                
               </div>
             </div>
-            <hr class="mb-4">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="same-address">
-              <label class="custom-control-label" for="same-address">Used book</label>
-            </div>                        
-            <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Add Book</button>
+            <hr class="mb-4">            
+            <button class="btn btn-primary btn-lg btn-block" onclick="showResult()">Add Book</button>
           </form>
         </div>
       </div>
@@ -124,10 +121,53 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script data-savepage-type="" type="text/plain" data-savepage-src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script data-savepage-type="" type="text/plain"></script>
-    <script data-savepage-type="" type="text/plain" data-savepage-src="../../assets/js/vendor/popper.min.js"></script>
-    <script data-savepage-type="" type="text/plain" data-savepage-src="../../dist/js/bootstrap.min.js"></script>
-    <script data-savepage-type="" type="text/plain" data-savepage-src="../../assets/js/vendor/holder.min.js"></script>
-    <script data-savepage-type="" type="text/plain"></script>  	
-</body></html>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>    
+    <script type="text/javascript" src="./dist/js/bootstrap.min.js"></script>        
+    <script type="text/javascript">
+      function showResult() {        
+        let title = $('#title').val();
+        let isbn = $('#isbn').val();
+        let author = $('#author').val();
+        let copies = $('#numberCopies').val();
+        let publisher = $('#publisher').val();                
+        let country = $('#country').find(":selected").text();
+        let state = $('#state').find(":selected").text();
+        let zip = $('#zip').val();
+        if (title === "" || isbn === "") {
+          $('#resultsModalTitle').html("Error");
+          $('#resultsModalBody').html("Book title and ISBN are required!");
+          $('#resultsModal').modal('show');        
+        } 
+        else {          
+          let query = {};
+          if (title) 
+            query["title"]=title;
+          if (isbn)
+            query["isbn"] = isbn;
+          if (author)
+            query["author"]=author;
+          if (copies)
+            query['copies'] = copies;
+          if (publisher)
+            query["publisher"]=publisher;
+          if (country)
+            query["country"] = country;
+          if (state)
+            query["state"] = state;
+          if (zip)
+            query["zip"] = zip;
+
+          $.post( "http://localhost:3000/books/add", query, function( data ) {                          
+              $('#resultsModalTitle').html("Success");
+              $('#resultsModalBody').html("Book has been added");
+              $('#resultsModal').modal('show');        
+            }).fail(function(response) {
+              $('#resultsModalTitle').html("Error");
+              $('#resultsModalBody').html("Error adding book");
+              $('#resultsModal').modal('show');        
+            })          
+        }
+      }
+    </script>
+  </body>
+</html>
