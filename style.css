@@ -1,12 +1,12 @@
 .fixed-bar {
 	position: fixed !important;
-	width: 100%;	
-	background-color: #343A40;	
+	width: 100%;
+	background-color: #343A40;
 	height: 60px;
 }
 
 .list {
-    display:inline-block; !important;
+    display:inline-block !important;
     margin-left: 10px;
 }
 
